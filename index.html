@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Recco's - Movie Recommendations</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+    <main>
+        <section class="feature movie">
+            <a class="search-init movie-init">Search by a movie you've seen</a>
+            <form id="movie-form" class="movie-form hidden">
+                <label for="search-movie">Enter movie:</label>
+                <input name="search-movie" type="text" id="js-movie" placeholder="ex: The Godfather" required>
+            </form>
+        </section>
+        <section class="feature genre">
+            <a class="search-init genre-init">Search by genre</a>
+            <form id="genre-form" class="genre-form hidden">
+                <label for="search-genre">Select genre:</label>
+                <select name="search-genre" type="select" id="js-genre" placeholder="ex: Action" required>
+                    <option value="action">Action</option>
+                    <option value="adventure">Adventure</option>
+                    <option value="horror">Horror</option>
+                    <option value="scifi">Sci-Fi</option>
+                </select>
+                </form>
+        </section>
+        <section class="errors hidden">Oops!</section>
+    </main>
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    <script src="jindex.js"></script>
+</body>
+</html>
