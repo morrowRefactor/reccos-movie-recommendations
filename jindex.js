@@ -1,3 +1,21 @@
+'use strict';
+
+function getMovies() {
+    const apiKey = 'cadc1278ff825f0fa5be2ce189d7b4a59ef1fe8f1af546690912ca539ffb0440'; 
+    const searchURL = 'https://api.trakt.tv';
+    const options = {
+        headers: {
+            'content-type': 'application/json',
+            'trakt-api-version': '2',
+            'trakt-api-key': apiKey
+        }
+    };
+  
+    fetch(searchURL, options)
+      .then(response => response.json())
+      .then(responseJson => console.log(responseJson));
+}
+
 // toggle form to enter movie title
 function showMovieForm() {
     $('.movie-init').click(function() {
@@ -27,6 +45,7 @@ function showGenreForm() {
 function watchButtons() {
     showMovieForm();
     showGenreForm();
+    getMovies();
 }
 
 $(watchButtons);
