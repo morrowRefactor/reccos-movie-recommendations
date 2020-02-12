@@ -3,22 +3,72 @@
 }
 
 body {
-    font-family: 'Roboto', sans-serif;
+    height: 100%;
+    margin: 0px;
+    background: url('https://user-images.githubusercontent.com/58446465/74203423-723a7e80-4c67-11ea-8176-32678e47e32e.jpg') no-repeat center center fixed;
+    background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
+}
+
+nav {
+    display: flex;
+    flex-direction: row;
+    position: fixed;
+    width: 100%;
+    background-color: rgb(202, 196, 196);
+    border-bottom: solid 2px gray;
+}
+
+.logo {
+    width: 50%;
+    padding-left: 10px;
+    color: black;
+    line-height: 50px;
+}
+
+.navlinks {
+    width: 50%;
+    padding-right: 10px;
+    text-align: right;
+    color: black;
+    line-height: 50px;
 }
 
 main {
     display: flex;
     flex-direction: column;
     align-items: center;
+    height: 100%;
+    padding-top: 60px;
 }
 
 .feature {
     width: 70%;
     border: solid 1px gray;
     border-radius: 3px;
-    padding: 20px 20px 20px 20px;
-    margin-bottom: 50px;
+    padding: 20px 10px 20px 10px;
+    margin-top: 20px;
     text-align: center;
+    background-color: white;
+}
+
+form,
+label,
+input,
+select,
+.selected-movie {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.spacer {
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 20px;
 }
 
 .search-init {
@@ -26,10 +76,76 @@ main {
     color: black;
 }
 
-.search-init:hover {
+input {
+    width: 80%;
+}
+
+.overview {
+    width: 80%;
+    text-align: center;
+    padding-bottom: 10px;
+}
+
+.pointer:hover {
     cursor: pointer;
+}
+
+.button {
+    text-decoration: none;
+    color: rgb(30, 14, 106);
+    font-weight: bold;
+    padding: 5px 10px 5px 10px;
+    border: solid 1px gray;
+    border-radius: 5px;
+}
+
+.button:hover {
+    background-color: rgb(30, 14, 106);
+    border-color: rgb(30, 14, 106);
+    color: white;
+    cursor: pointer;
+}
+
+.a-link {
+    font-size: .75em;
+}
+
+.overview {
+    padding-bottom: 20px;
+    width: 100%;
+    font-size: .80em;
+}
+
+.search-results,
+.selected-movie,
+.recommendations {
+    width: 70%;
+}
+
+.movie-block,
+.rate-movie {
+    width: 100%;
+    background-color: white;
+    border: solid 1px gray;
+    border-radius: 3px;
+    padding: 20px 10px 20px 10px;
+    margin: 10px auto 10px auto;
+    text-align: center;
 }
 
 .hidden {
     display: none;
+}
+
+.poster {
+    width: 100px;
+    margin-bottom: 10px;
+}
+
+.search-confirm {
+    display: block;
+    border: solid 1px gray;
+    border-radius: 3px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }

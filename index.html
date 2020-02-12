@@ -6,18 +6,25 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Recco's - Movie Recommendations</title>
     <link rel="stylesheet" href="main.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
 </head>
 <body>
+    <nav>
+        <div class="logo">RECCO'S</div>
+        <div class="navlinks hidden"><a class="new-search pointer">New Search</a></div>
+    </nav>
     <main>
         <section class="feature movie">
-            <a class="search-init movie-init">Search by a movie you've seen</a>
+            <a class="search-init movie-init pointer">Search by a movie you've seen</a>
             <form id="movie-form" class="movie-form hidden">
                 <label for="search-movie">Enter movie:</label>
                 <input name="search-movie" type="text" id="js-movie" placeholder="ex: The Godfather" required>
+                <input type="submit" value="Find movie" class="button" />
             </form>
+            <div class="errors hidden"></div>
         </section>
-        <section class="feature genre">
-            <a class="search-init genre-init">Search by genre</a>
+        <section class="feature genre hidden">
+            <a class="search-init genre-init pointer">Search by genre</a>
             <form id="genre-form" class="genre-form hidden">
                 <label for="search-genre">Select genre:</label>
                 <select name="search-genre" type="select" id="js-genre" placeholder="ex: Action" required>
@@ -26,9 +33,12 @@
                     <option value="horror">Horror</option>
                     <option value="scifi">Sci-Fi</option>
                 </select>
+                <input type="submit" value="Find movies" class="button" />
                 </form>
         </section>
-        <section class="errors hidden">Oops!</section>
+        <section class="search-results"></section>
+        <section class="selected-movie"></section>
+        <section class="recommendations"></section>
     </main>
     <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
     <script src="jindex.js"></script>
