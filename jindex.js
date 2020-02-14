@@ -53,7 +53,7 @@ function displayResults(resultsObj) {
     } else {
         $('.movie').hide();
         $('.select-results, .navlinks').show();
-        $('.intro').empty();
+        $('.intro, .bottom').empty();
         $('.intro').append(`<p>Select the movie you'd like to apply your score to</p>`);
 
         for(let i = 0; i < resultsObj.results.length; i++) {
@@ -191,7 +191,7 @@ function displayReccos(movieReccos) {
     console.log(movieReccos);
 
     $('.selected-movie, .feature, .movie-form').hide();
-    $('.recommendations').empty();
+    $('.recommendations, .bottom').empty();
     $('.recommendations').show();
 
     for(let i = 0; i < movieReccos.results.length; i++) {
