@@ -131,7 +131,7 @@ select {
 
 .button {
     text-decoration: none;
-    background-color: rgb(74, 47, 207);
+    background-color: rgb(54, 94, 224);
     color: white;
     font-weight: bold;
     padding: 5px 10px 5px 10px;
@@ -229,7 +229,7 @@ select {
     }
 
     #movie-form {
-        width: 40%;
+        width: 30%;
         margin-right: auto;
         margin-left: auto;
     }
@@ -255,7 +255,6 @@ select {
         margin-top: auto;
         margin-bottom: auto;
         padding: 20px;
-        background-color: rgb(238, 235, 235);
         font-size: 1em;
     }
 
