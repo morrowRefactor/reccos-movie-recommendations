@@ -1,6 +1,8 @@
 # reccos-movie-recommendations
 An app for generating movie recommendations based on a user's rating of their favorite movies.
+
 Live App: https://morrowrefactor.github.io/reccos-movie-recommendations/
+
 Screenshots: https://gist.github.com/morrowRefactor/d8df6a6fd8e87da7d9a2cd0c83927399
 
 Summary:
