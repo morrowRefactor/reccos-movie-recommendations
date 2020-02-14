@@ -191,12 +191,12 @@ select {
         font-size: 16px;
     }
 
-    .logo-image {
-        width: 160px;
-    }
-
     .bottom-image {
         background-size: 100% 20%;
+    }
+
+    .logo-image {
+        width: 160px;
     }
 
     .button {
@@ -213,7 +213,7 @@ select {
 /* desktop adjustments */
 @media (min-width: 900px) {
     body {
-        font-size: 18px;
+        font-size: 20px;
     }
 
     main {

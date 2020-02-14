@@ -264,7 +264,16 @@ function adjustFooter(section) {
 function setBackground() {
     let pageHeight = screen.height;
     let navHeight = document.getElementById('nav').offsetHeight;
-    $('.main').css('height', (pageHeight + (navHeight * .02)));
+    if(window.innerWidth > 899) {
+        document.getElementById('main').classList.remove('bottom-image');
+        $('main').append(
+            `<section class="bottom">
+            <img class="bottom-img" src="https://user-images.githubusercontent.com/58446465/74387951-ec970a00-4df1-11ea-9aae-63a07eb26562.png" alt="Recco's Movie Recommendations" />
+            </section>`
+        )
+    } else {
+        $('.main').css('height', (pageHeight - navHeight));
+    }
 }
 
 function watchButtons() {
