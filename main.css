@@ -2,16 +2,23 @@
     box-sizing: border-box;
 }
 
-body {
+body,
+html {
     height: 100%;
     margin: 0px;
-    background: url('https://user-images.githubusercontent.com/58446465/74203423-723a7e80-4c67-11ea-8176-32678e47e32e.jpg') no-repeat center center fixed;
-    background-size: cover;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
     font-family: 'Open Sans', sans-serif;
-    font-size: 16px;
+    font-size: 15px;
+    background-color: rgb(238, 235, 235);
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.bottom-img {
+    width: 100%;
 }
 
 nav {
@@ -19,23 +26,34 @@ nav {
     flex-direction: row;
     position: fixed;
     width: 100%;
-    background-color: rgb(202, 196, 196);
-    border-bottom: solid 2px gray;
+    background-color: white;
+    box-shadow: 0px 2px 5px 0px gray;
 }
 
 .logo {
     width: 50%;
-    padding-left: 10px;
-    color: black;
-    line-height: 50px;
+    padding: 5px 0px 5px 10px;
+}
+
+.logo-img {
+    width: 120px;
 }
 
 .navlinks {
+    display: block;
+    position: absolute;
+    bottom: 0;
+    right: 0;
     width: 50%;
-    padding-right: 10px;
+    padding: 0px 10px 10px 0px;
     text-align: right;
-    color: black;
-    line-height: 50px;
+    color: rgb(30, 14, 106);
+    font-size: .80em;
+    font-weight: bold;
+}
+
+.new-search:hover {
+    text-decoration: underline;
 }
 
 main {
@@ -43,7 +61,15 @@ main {
     flex-direction: column;
     align-items: center;
     height: 100%;
-    padding-top: 60px;
+    padding-top: 70px;
+}
+
+.intro {
+    width: 100%;
+    background-color: rgb(46, 46, 46);
+    color: white;
+    font-size: .80em;
+    padding: 0px 10px 0px 10px;
 }
 
 .feature {
@@ -66,7 +92,6 @@ select,
 }
 
 .spacer {
-    display: block;
     margin-top: 10px;
     margin-bottom: 20px;
 }
@@ -80,10 +105,22 @@ input {
     width: 80%;
 }
 
+select {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 25%;
+    border: solid 1px gray;
+    border-radius: .2em;
+}
+
 .overview {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
     width: 80%;
     text-align: center;
-    padding-bottom: 10px;
+    font-size: .80em;
 }
 
 .pointer:hover {
@@ -92,39 +129,29 @@ input {
 
 .button {
     text-decoration: none;
-    color: rgb(30, 14, 106);
+    background-color: rgb(68, 38, 216);
+    color: white;
     font-weight: bold;
     padding: 5px 10px 5px 10px;
-    border: solid 1px gray;
     border-radius: 5px;
+    font-size: .80em;
 }
 
 .button:hover {
-    background-color: rgb(30, 14, 106);
-    border-color: rgb(30, 14, 106);
+    background-color: rgb(39, 22, 126);
     color: white;
     cursor: pointer;
 }
 
-.a-link {
-    font-size: .75em;
-}
-
-.overview {
-    padding-bottom: 20px;
-    width: 100%;
-    font-size: .80em;
-}
-
 .search-results,
 .selected-movie,
-.recommendations {
-    width: 70%;
+.recommendations,
+.bottom {
+    width: 100%;
 }
 
-.movie-block,
-.rate-movie {
-    width: 100%;
+.movie-block {
+    width: 70%;
     background-color: white;
     border: solid 1px gray;
     border-radius: 3px;
@@ -140,6 +167,10 @@ input {
 .poster {
     width: 100px;
     margin-bottom: 10px;
+}
+
+.title {
+    font-weight: bold;
 }
 
 .search-confirm {

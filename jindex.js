@@ -52,6 +52,12 @@ function displayResults(resultsObj) {
         );
     } else {
         $('.navlinks').show();
+        $('.movie').hide();
+        $('.select-result').show();
+        $('.footer').hide();
+        $('.intro').empty();
+        $('.intro').append(`<p>Select the movie you'd like to apply your score to</p>`);
+
         for(let i = 0; i < resultsObj.results.length; i++) {
             let movieTitle = resultsObj.results.map(titleVal => titleVal.title);
             let moviePost = resultsObj.results.map(postVal => postVal.poster_path);
@@ -61,38 +67,14 @@ function displayResults(resultsObj) {
             $('.search-results').append(
                 `<section class='movie-block' id='${movieId[i]}'>
                 <div><img src='https://image.tmdb.org/t/p/w500${moviePost[i]}' class='poster' alt='${movieTitle[i]}' /></div>
-                <div><span class='title-click spacer'>${movieTitle[i]} (${releaseYear[i]})</span></div>
-                <a class='button pointer a-link' onclick='selectMovie(${movieId[i]})'>This one!</a>
+                <div class='spacer'><span class='title-click'><span class='title'>${movieTitle[i]}</span> (${releaseYear[i]})</span></div>
+                <a class='button pointer spacer' onclick='selectMovie(${movieId[i]})'>This one!</a>
                 </section>`
             );
         }
+
+        adjustFooter('.search-results');
     }
-}
-
-// toggle form to enter movie title
-function showMovieForm() {
-    $('.movie-init').click(function() {
-        $('.movie-form').toggle('slow', function () {
-            if($('.movie-form').is(':visible')){
-                $('.movie-form').show();
-            } else {
-                $('.movie-form').hide();
-            }
-        })
-    })
-}
-
-// toggle form to select movie genre
-function showGenreForm() {
-    $('.genre-init').click(function() {
-        $('.genre-form').toggle('slow', function () {
-            if($('.genre-form').is(':visible')){
-                $('.genre-form').show();
-            } else {
-                $('.genre-form').hide();
-            }
-        })
-    })
 }
 
 // watch for searches by movie and clean string value
@@ -143,8 +125,10 @@ function displayMovieRating(movieInfo) {
     console.log(movieInfo);
     $('.feature').hide();
     $('.search-results').hide();
+    $('.intro').hide();
     $('.selected-movie').empty();
     $('.selected-movie').show();
+    $('.footer').show();
 
     let title = movieInfo.title;
     let year = movieInfo.release_date.substring(4,0);
@@ -152,12 +136,12 @@ function displayMovieRating(movieInfo) {
     let filmid = movieInfo.id;
 
     $('.selected-movie').append(
-        `<section class='rate-movie'>
+        `<section class='movie-block'>
         <div><img src='https://image.tmdb.org/t/p/w500${poster}' class='poster' alt='${title}' /></div>
-        <div><span class='title-click'>${title}</span> (${year})</div>
+        <div><span class='title-click'><span class='title'>${title}</span> (${year})</span></div>
         <form id='rating-form'>
         <label for='rate-movie'>How would you rate this movie?</label>
-        <select name='rate-movie' type='select' placeholder='10' required>
+        <select name='rate-movie' type='select' placeholder='10' class='select-css' required>
         <option value='10'>10</option>
         <option value='9'>9</option>
         <option value='8'>8</option>
@@ -170,9 +154,11 @@ function displayMovieRating(movieInfo) {
         <option value='1'>1</option>
         </select>
         </form>
-        <a class='button pointer a-link' onclick='findReccos(${filmid})'>Find recco's!</a>
+        <a class='button pointer spacer' onclick='findReccos(${filmid})'>Find recco's!</a>
         </section>`
     )
+
+    adjustFooter('.selected-movie');
 }
 
 // pull recommendations via api with movie id
@@ -207,6 +193,8 @@ function displayReccos(movieReccos) {
 
     $('.selected-movie').hide();
     $('.feature').hide();
+    $('.movie-form').hide();
+    $('.footer').hide();
     $('.recommendations').empty();
     $('.recommendations').show();
 
@@ -216,16 +204,24 @@ function displayReccos(movieReccos) {
         let reccoSumm = movieReccos.results.map(overviewVal => overviewVal.overview);
         let reccoYear = movieReccos.results.map(releaseVal => releaseVal.release_date.substring(4,0));
         let reccoId = movieReccos.results.map(idVal => idVal.id);
+        let vote = movieReccos.results.map(voteVal => voteVal.vote_average);
 
         $('.recommendations').append(
             `<section class='movie-block'>
             <div><img src='https://image.tmdb.org/t/p/w500${reccoPost[i]}' class='poster' alt='${reccoTitle[i]}' /></div>
-            <div><span class='title-click spacer'>${reccoTitle[i]} (${reccoYear[i]})</span></div>
-            <section class='overview hidden' id='${reccoId[i]}'>${reccoSumm[i]}</section>
-            <a class='button pointer a-link' onClick='showOverview(${reccoId[i]})'>Read Overview</a>
+            <div><span class='title-click spacer'><span class='title'>${reccoTitle[i]}</span> (${reccoYear[i]})</span></div>
+            <div><p>Rating: ${vote[i]}</p></div>
+            <div class='spacer'></div>
+            <section class='overview hidden' id='${reccoId[i]}'>
+            ${reccoSumm[i]}
+            <div class='spacer'></div>
+            </section>
+            <a class='button pointer spacer' onClick='showOverview(${reccoId[i]})'>Read Overview</a>
             </section>`
         )
     }
+
+    adjustFooter('.recommendations');
 }
 
 // show movie summaries
@@ -245,12 +241,30 @@ function newSearch() {
         $('.movie-block').hide();
         $('.navlinks').hide();
         document.getElementById('movie-form').reset();
+        $('.movie-form').show();
+        $('.footer').show();
+        $('.search-results').empty();
+        $('.selected-movie').empty();
+        $('.recommendations').empty();
     })
+} 
+
+function adjustFooter(section) {
+    let domHeight = document.getElementById('container').scrollHeight;
+    if(domHeight > screen.height) {
+        $(section).append(
+            `<section class="bottom">
+            <img class="bottom-img" src="https://user-images.githubusercontent.com/58446465/74387951-ec970a00-4df1-11ea-9aae-63a07eb26562.png" alt="Recco's Movie Recommendations" />
+            </section>`
+        )
+        $('.footer').hide();
+    } else { 
+        $('.footer').show();
+    }
 }
 
+
 function watchButtons() {
-    showMovieForm();
-    showGenreForm();
     movieSubmit();
     newSearch();
 }
