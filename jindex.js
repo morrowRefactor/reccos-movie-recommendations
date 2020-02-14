@@ -51,10 +51,8 @@ function displayResults(resultsObj) {
             `Oops! Looks like we weren't able to find movies matching that search.  Try another title!`
         );
     } else {
-        $('.navlinks').show();
         $('.movie').hide();
-        $('.select-result').show();
-        $('.footer').hide();
+        $('.select-results, .navlinks').show();
         $('.intro').empty();
         $('.intro').append(`<p>Select the movie you'd like to apply your score to</p>`);
 
@@ -63,12 +61,16 @@ function displayResults(resultsObj) {
             let moviePost = resultsObj.results.map(postVal => postVal.poster_path);
             let releaseYear = resultsObj.results.map(yearVal => yearVal.release_date.substring(4,0));
             let movieId = resultsObj.results.map(idVal => idVal.id);
+            let details = resultsObj.results.map(detVal => detVal.overview);
 
             $('.search-results').append(
-                `<section class='movie-block' id='${movieId[i]}'>
+                `<section class='movie-block result-block' id='${movieId[i]}'>
+                <div class='perts'>
                 <div><img src='https://image.tmdb.org/t/p/w500${moviePost[i]}' class='poster' alt='${movieTitle[i]}' /></div>
                 <div class='spacer'><span class='title-click'><span class='title'>${movieTitle[i]}</span> (${releaseYear[i]})</span></div>
                 <a class='button pointer spacer' onclick='selectMovie(${movieId[i]})'>This one!</a>
+                </div>
+                <div class='details hidden'><p>${details[i]}</p></div>
                 </section>`
             );
         }
@@ -77,7 +79,7 @@ function displayResults(resultsObj) {
     }
 }
 
-// watch for searches by movie and clean string value
+// watch for searches and clean string value
 function movieSubmit() {
     $('.movie-form').submit(event => {
         event.preventDefault();
@@ -123,12 +125,9 @@ function selectMovie(clickId) {
 // display selected movie and form for submitting user ranking
 function displayMovieRating(movieInfo) {
     console.log(movieInfo);
-    $('.feature').hide();
-    $('.search-results').hide();
-    $('.intro').hide();
+    $('.feature, .search-results, .intro').hide();
     $('.selected-movie').empty();
     $('.selected-movie').show();
-    $('.footer').show();
 
     let title = movieInfo.title;
     let year = movieInfo.release_date.substring(4,0);
@@ -141,7 +140,7 @@ function displayMovieRating(movieInfo) {
         <div><span class='title-click'><span class='title'>${title}</span> (${year})</span></div>
         <form id='rating-form'>
         <label for='rate-movie'>How would you rate this movie?</label>
-        <select name='rate-movie' type='select' placeholder='10' class='select-css' required>
+        <select name='rate-movie' type='select' placeholder='10' required>
         <option value='10'>10</option>
         <option value='9'>9</option>
         <option value='8'>8</option>
@@ -191,10 +190,7 @@ function findReccos(reccoId) {
 function displayReccos(movieReccos) {
     console.log(movieReccos);
 
-    $('.selected-movie').hide();
-    $('.feature').hide();
-    $('.movie-form').hide();
-    $('.footer').hide();
+    $('.selected-movie, .feature, .movie-form').hide();
     $('.recommendations').empty();
     $('.recommendations').show();
 
@@ -204,19 +200,21 @@ function displayReccos(movieReccos) {
         let reccoSumm = movieReccos.results.map(overviewVal => overviewVal.overview);
         let reccoYear = movieReccos.results.map(releaseVal => releaseVal.release_date.substring(4,0));
         let reccoId = movieReccos.results.map(idVal => idVal.id);
-        let vote = movieReccos.results.map(voteVal => voteVal.vote_average);
+        let reccoVote = movieReccos.results.map(voteVal => voteVal.vote_average);
 
         $('.recommendations').append(
-            `<section class='movie-block'>
+            `<section class='movie-block result-block'>
+            <div class='perts'>
             <div><img src='https://image.tmdb.org/t/p/w500${reccoPost[i]}' class='poster' alt='${reccoTitle[i]}' /></div>
             <div><span class='title-click spacer'><span class='title'>${reccoTitle[i]}</span> (${reccoYear[i]})</span></div>
-            <div><p>Rating: ${vote[i]}</p></div>
+            <div><p>Rating: ${reccoVote[i]}</p></div>
             <div class='spacer'></div>
-            <section class='overview hidden' id='${reccoId[i]}'>
+            </div>
+            <div class='overview hidden' id='${reccoId[i]}'>
             ${reccoSumm[i]}
-            <div class='spacer'></div>
-            </section>
-            <a class='button pointer spacer' onClick='showOverview(${reccoId[i]})'>Read Overview</a>
+            <section class='spacer'></section>
+            </div>
+            <a class='button pointer spacer show-over' onClick='showOverview(${reccoId[i]})'>Read Overview</a>
             </section>`
         )
     }
@@ -237,36 +235,42 @@ function showOverview(overviewId) {
 // start a new search
 function newSearch() {
     $('.new-search').click(function() {
-        $('.movie').show();
-        $('.movie-block').hide();
-        $('.navlinks').hide();
+        $('.movie-block, .navlinks').hide();
         document.getElementById('movie-form').reset();
-        $('.movie-form').show();
-        $('.footer').show();
-        $('.search-results').empty();
-        $('.selected-movie').empty();
-        $('.recommendations').empty();
+        $('.movie, .movie-form').show();
+        $('.search-results,. selected-movie, .recommendations').empty();
+        adjustFooter();
     })
 } 
 
+// maintain background image appearance to account for DOM scroll height
 function adjustFooter(section) {
     let domHeight = document.getElementById('container').scrollHeight;
     if(domHeight > screen.height) {
+        document.getElementById('main').classList.remove('bottom-image');
         $(section).append(
             `<section class="bottom">
             <img class="bottom-img" src="https://user-images.githubusercontent.com/58446465/74387951-ec970a00-4df1-11ea-9aae-63a07eb26562.png" alt="Recco's Movie Recommendations" />
             </section>`
         )
-        $('.footer').hide();
     } else { 
-        $('.footer').show();
+        $('.bottom').hide();
+        document.getElementById('main').classList.add('bottom-image');
+        setBackground();
     }
 }
 
+// align the background image to bottom on initial load
+function setBackground() {
+    let pageHeight = screen.height;
+    let navHeight = document.getElementById('nav').offsetHeight;
+    $('.main').css('height', (pageHeight - navHeight));
+}
 
 function watchButtons() {
     movieSubmit();
     newSearch();
+    setBackground();
 }
 
 $(watchButtons);
