@@ -235,7 +235,7 @@ function showOverview(overviewId) {
 // start a new search
 function newSearch() {
     $('.new-search').click(function() {
-        $('.movie-block, .navlinks').hide();
+        $('.movie-block, .navlinks, .intro').hide();
         document.getElementById('movie-form').reset();
         $('.movie, .movie-form').show();
         $('.search-results,. selected-movie, .recommendations').empty();
@@ -264,7 +264,7 @@ function adjustFooter(section) {
 function setBackground() {
     let pageHeight = screen.height;
     let navHeight = document.getElementById('nav').offsetHeight;
-    $('.main').css('height', (pageHeight - navHeight));
+    $('.main').css('height', (pageHeight + (navHeight * .02)));
 }
 
 function watchButtons() {
