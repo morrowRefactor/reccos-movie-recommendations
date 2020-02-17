@@ -22,8 +22,6 @@ function getMovies(movieQuery) {
 
     const queryString = formatQueryParams(params)
     const url = searchURL + '?' + queryString;
-
-    console.log(url);
   
     fetch(url) 
       .then(response => {
@@ -40,7 +38,6 @@ function getMovies(movieQuery) {
 
 // display search results when searching by movie
 function displayResults(resultsObj) {
-    console.log(resultsObj);
     $('.search-results').empty();
     $('.search-results').show();
     $('.errors').hide();
@@ -59,7 +56,7 @@ function displayResults(resultsObj) {
         for(let i = 0; i < resultsObj.results.length; i++) {
             let movieTitle = resultsObj.results.map(titleVal => titleVal.title);
             let moviePost = resultsObj.results.map(postVal => postVal.poster_path);
-            let releaseYear = resultsObj.results.map(yearVal => yearVal.release_date.substring(4,0));
+            let releaseYear = resultsObj.results.map(yearVal => yearVal.release_date);
             let movieId = resultsObj.results.map(idVal => idVal.id);
             let details = resultsObj.results.map(detVal => detVal.overview);
 
@@ -67,7 +64,7 @@ function displayResults(resultsObj) {
                 `<section class='movie-block result-block' id='${movieId[i]}'>
                 <div class='perts'>
                 <div><img src='https://image.tmdb.org/t/p/w500${moviePost[i]}' class='poster' alt='${movieTitle[i]}' /></div>
-                <div class='spacer'><span class='title-click'><span class='title'>${movieTitle[i]}</span> (${releaseYear[i]})</span></div>
+                <div class='spacer'><span class='title-click'><span class='title'>${movieTitle[i]} (${releaseYear[i].substring(4,0)})</span></span></div>
                 <a class='button pointer spacer' onclick='selectMovie(${movieId[i]})'>This one!</a>
                 </div>
                 <div class='details hidden'><p>${details[i]}</p></div>
@@ -83,7 +80,7 @@ function displayResults(resultsObj) {
 function movieSubmit() {
     $('.movie-form').submit(event => {
         event.preventDefault();
-        const movieStringRaw = $('#js-movie').val();
+        const movieStringRaw = $('#search-movie').val();
         let movieString = movieStringRaw;
 
         cleanString(movieStringRaw);
@@ -106,8 +103,6 @@ function selectMovie(clickId) {
 
     const queryString = formatQueryParams(idParams)
     const url = idSearchURL + clickId + '?' + queryString;
-
-    console.log(url);
   
     fetch(url) 
       .then(response => {
@@ -124,22 +119,21 @@ function selectMovie(clickId) {
 
 // display selected movie and form for submitting user ranking
 function displayMovieRating(movieInfo) {
-    console.log(movieInfo);
     $('.feature, .search-results, .intro').hide();
     $('.selected-movie').empty();
     $('.selected-movie').show();
 
     let title = movieInfo.title;
-    let year = movieInfo.release_date.substring(4,0);
+    let year = movieInfo.release_date;
     let poster = movieInfo.poster_path;
     let filmid = movieInfo.id;
 
     $('.selected-movie').append(
         `<section class='movie-block'>
         <div><img src='https://image.tmdb.org/t/p/w500${poster}' class='poster' alt='${title}' /></div>
-        <div><span class='title-click'><span class='title'>${title}</span> (${year})</span></div>
+        <div><span class='title-click'><span class='title'>${title}</span> (${year.substring(4,0)})</span></div>
         <form id='rating-form'>
-        <label for='rate-movie'>How would you rate this movie?</label>
+        <label for='rate-movie'>How would you rate this movie?
         <select name='rate-movie' type='select' placeholder='10' required>
         <option value='10'>10</option>
         <option value='9'>9</option>
@@ -152,6 +146,7 @@ function displayMovieRating(movieInfo) {
         <option value='2'>2</option>
         <option value='1'>1</option>
         </select>
+        </label>
         </form>
         <a class='button pointer spacer' onclick='findReccos(${filmid})'>Find recco's!</a>
         </section>`
@@ -170,8 +165,6 @@ function findReccos(reccoId) {
 
     const queryString = formatQueryParams(idParams)
     const url = idSearchURL + reccoId + '/recommendations?' + queryString;
-
-    console.log(url);
   
     fetch(url) 
       .then(response => {
@@ -188,8 +181,6 @@ function findReccos(reccoId) {
 
 // display movie recommendations
 function displayReccos(movieReccos) {
-    console.log(movieReccos);
-
     $('.selected-movie, .feature, .movie-form').hide();
     $('.recommendations, .bottom').empty();
     $('.recommendations').show();
@@ -198,7 +189,7 @@ function displayReccos(movieReccos) {
         let reccoTitle = movieReccos.results.map(titleVal => titleVal.title);
         let reccoPost = movieReccos.results.map(postVal => postVal.poster_path);
         let reccoSumm = movieReccos.results.map(overviewVal => overviewVal.overview);
-        let reccoYear = movieReccos.results.map(releaseVal => releaseVal.release_date.substring(4,0));
+        let reccoYear = movieReccos.results.map(releaseVal => releaseVal.release_date);
         let reccoId = movieReccos.results.map(idVal => idVal.id);
         let reccoVote = movieReccos.results.map(voteVal => voteVal.vote_average);
 
@@ -206,7 +197,7 @@ function displayReccos(movieReccos) {
             `<section class='movie-block result-block'>
             <div class='perts'>
             <div><img src='https://image.tmdb.org/t/p/w500${reccoPost[i]}' class='poster' alt='${reccoTitle[i]}' /></div>
-            <div><span class='title-click spacer'><span class='title'>${reccoTitle[i]}</span> (${reccoYear[i]})</span></div>
+            <div><span class='title-click spacer'><span class='title'>${reccoTitle[i]}</span> (${reccoYear[i].substring(4,0)})</span></div>
             <div><p>Rating: ${reccoVote[i]}</p></div>
             <div class='spacer'></div>
             </div>
@@ -238,19 +229,19 @@ function newSearch() {
         $('.movie-block, .navlinks, .intro').hide();
         document.getElementById('movie-form').reset();
         $('.movie, .movie-form').show();
-        $('.search-results,. selected-movie, .recommendations').empty();
+        $('.search-results, .selected-movie, .recommendations').empty();
         adjustFooter();
     })
 } 
 
 // maintain background image appearance to account for DOM scroll height
 function adjustFooter(section) {
-    let domHeight = document.getElementById('container').scrollHeight;
+    let domHeight = document.getElementById('body').scrollHeight;
     if(domHeight > screen.height) {
         document.getElementById('main').classList.remove('bottom-image');
         $(section).append(
             `<section class="bottom">
-            <img class="bottom-img" src="https://user-images.githubusercontent.com/58446465/74387951-ec970a00-4df1-11ea-9aae-63a07eb26562.png" alt="Recco's Movie Recommendations" />
+            <img class="bottom-img" src="https://user-images.githubusercontent.com/58446465/74387951-ec970a00-4df1-11ea-9aae-63a07eb26562.png" alt="film scroll background" />
             </section>`
         )
     } else { 
@@ -268,7 +259,7 @@ function setBackground() {
         document.getElementById('main').classList.remove('bottom-image');
         $('main').append(
             `<section class="bottom">
-            <img class="bottom-img" src="https://user-images.githubusercontent.com/58446465/74387951-ec970a00-4df1-11ea-9aae-63a07eb26562.png" alt="Recco's Movie Recommendations" />
+            <img class="bottom-img" src="https://user-images.githubusercontent.com/58446465/74387951-ec970a00-4df1-11ea-9aae-63a07eb26562.png" alt="film scroll background" />
             </section>`
         )
     } else {

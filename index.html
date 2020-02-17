@@ -8,32 +8,33 @@
     <link rel="stylesheet" href="main.css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
 </head>
-<body>
-    <section id="container">
+<body id="body">
+    <header>
         <nav id="nav">
-            <div class="logo"><img src="https://user-images.githubusercontent.com/58446465/74386457-df781c00-4ded-11ea-8a31-5f5252fe83ec.png" alt="Recco's Movie Recommendations" class="logo-img"></div>
+            <div class="logo"><img src="https://user-images.githubusercontent.com/58446465/74386457-df781c00-4ded-11ea-8a31-5f5252fe83ec.png" alt="film scroll background" class="logo-img"></div>
             <div class="navlinks hidden"><a class="new-search pointer">New Search</a></div>
         </nav>
-        <main class="main bottom-image" id="main">
-            <section class="intro" id="intro">
-                <p>Welcome to Recco's!</p>  
-                <p>Find movie recommendations based on your own rating of a movie you've seen.</p>
-                <p>Use the search box below to find a movie you'd like to use to find similar recommendations.</p>
-            </section>
-            <section class="feature movie">
-                <p class="search-init">Search by a movie you've seen</p>
-                <form id="movie-form" class="movie-form">
-                    <label for="search-movie">Enter movie:</label>
-                    <input name="search-movie" type="text" id="js-movie" placeholder="ex: The Godfather" required>
-                    <input type="submit" class="button" value="Find movie" required /></input>
-                </form>
-                <div class="errors hidden"></div>
-            </section>
-            <section class="search-results hidden"></section>
-            <section class="selected-movie hidden"></section>
-            <section class="recommendations hidden"></section>
-        </main>
-    </section>
+    </header>
+    <main class="main bottom-image" id="main">
+        <section class="intro" id="intro">
+            <p>Welcome to Recco's!</p>  
+            <p>Find movie recommendations based on your own rating of a movie you've seen.</p>
+            <p>Use the search box below to find a movie you'd like to use to find similar recommendations.</p>
+        </section>
+        <section class="feature movie">
+            <h2 class="search-init">Search by a movie you've seen</h2>
+            <form id="movie-form" class="movie-form">
+                <label for="search-movie">Enter movie:
+                <input name="search-movie" type="text" id="search-movie" placeholder="ex: The Godfather" required />
+                <input type="submit" class="button" value="Find movie" required /></input>
+                </label>
+            </form>
+            <div class="errors hidden"></div>
+        </section>
+        <section class="search-results hidden"></section>
+        <section class="selected-movie hidden"></section>
+        <section class="recommendations hidden"></section>
+    </main>
     <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
     <script src="jindex.js"></script>
 </body>
