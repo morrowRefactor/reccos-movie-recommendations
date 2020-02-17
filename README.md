@@ -13,13 +13,17 @@ HTML, CSS, JavaScript/jQuery, TMDb API
 Screenshots:
 
 Homepage:
+
 ![screenshotDescription](https://user-images.githubusercontent.com/58446465/74576401-7fff4500-4f82-11ea-8294-c0eef255f334.png)
 
 Search results (selecting a movie to score):
+
 ![screenshotDescription](https://user-images.githubusercontent.com/58446465/74576413-855c8f80-4f82-11ea-814e-e8805504d6cc.png)
 
 Scoring a movie:
+
 ![screenshotDescription](https://user-images.githubusercontent.com/58446465/74576422-8db4ca80-4f82-11ea-916c-f2af3e6a0858.png)
 
 Returned movie recommendations:
+
 ![screenshotDescription](https://user-images.githubusercontent.com/58446465/74576423-91485180-4f82-11ea-90b6-243a712c80dd.png)
