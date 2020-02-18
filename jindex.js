@@ -22,6 +22,8 @@ function getMovies(movieQuery) {
 
     const queryString = formatQueryParams(params)
     const url = searchURL + '?' + queryString;
+
+    console.log(url);
   
     fetch(url) 
       .then(response => {
@@ -43,6 +45,7 @@ function displayResults(resultsObj) {
     $('.errors').hide();
 
     if(resultsObj.results.length < 1) {
+        $('.errors').empty();
         $('.errors').show();
         $('.errors').append(
             `Oops! Looks like we weren't able to find movies matching that search.  Try another title!`
@@ -134,7 +137,7 @@ function displayMovieRating(movieInfo) {
         <div><span class='title-click'><span class='title'>${title}</span> (${year.substring(4,0)})</span></div>
         <form id='rating-form'>
         <label for='rate-movie'>How would you rate this movie?
-        <select name='rate-movie' type='select' placeholder='10' required>
+        <select name='rate-movie' type='select' placeholder='10' id='rate-movie' required>
         <option value='10'>10</option>
         <option value='9'>9</option>
         <option value='8'>8</option>
@@ -184,30 +187,44 @@ function displayReccos(movieReccos) {
     $('.selected-movie, .feature, .movie-form').hide();
     $('.recommendations, .bottom').empty();
     $('.recommendations').show();
+    
+    let reccoScore = document.getElementById('rate-movie').value;
+    let grade = 0;
+
+    if (reccoScore >= 8) {
+        grade = 7;
+    } else if (reccoScore < 8 && reccoScore >= 6) {
+        grade = 5;
+    } else {
+        grade = 1;
+    }
 
     for(let i = 0; i < movieReccos.results.length; i++) {
-        let reccoTitle = movieReccos.results.map(titleVal => titleVal.title);
-        let reccoPost = movieReccos.results.map(postVal => postVal.poster_path);
-        let reccoSumm = movieReccos.results.map(overviewVal => overviewVal.overview);
-        let reccoYear = movieReccos.results.map(releaseVal => releaseVal.release_date);
-        let reccoId = movieReccos.results.map(idVal => idVal.id);
         let reccoVote = movieReccos.results.map(voteVal => voteVal.vote_average);
 
-        $('.recommendations').append(
-            `<section class='movie-block result-block'>
-            <div class='perts'>
-            <div><img src='https://image.tmdb.org/t/p/w500${reccoPost[i]}' class='poster' alt='${reccoTitle[i]}' /></div>
-            <div><span class='title-click spacer'><span class='title'>${reccoTitle[i]}</span> (${reccoYear[i].substring(4,0)})</span></div>
-            <div><p>Rating: ${reccoVote[i]}</p></div>
-            <div class='spacer'></div>
-            </div>
-            <div class='overview hidden' id='${reccoId[i]}'>
-            ${reccoSumm[i]}
-            <section class='spacer'></section>
-            </div>
-            <a class='button pointer spacer show-over' onClick='showOverview(${reccoId[i]})'>Read Overview</a>
-            </section>`
-        )
+        if(reccoVote[i] >= grade) {
+            let reccoTitle = movieReccos.results.map(titleVal => titleVal.title);
+            let reccoPost = movieReccos.results.map(postVal => postVal.poster_path);
+            let reccoSumm = movieReccos.results.map(overviewVal => overviewVal.overview);
+            let reccoYear = movieReccos.results.map(releaseVal => releaseVal.release_date);
+            let reccoId = movieReccos.results.map(idVal => idVal.id);
+
+            $('.recommendations').append(
+                `<section class='movie-block result-block'>
+                <div class='perts'>
+                <div><img src='https://image.tmdb.org/t/p/w500${reccoPost[i]}' class='poster' alt='${reccoTitle[i]}' /></div>
+                <div><span class='title-click spacer'><span class='title'>${reccoTitle[i]}</span> (${reccoYear[i].substring(4,0)})</span></div>
+                <div><p>Rating: ${reccoVote[i]}</p></div>
+                <div class='spacer'></div>
+                </div>
+                <div class='overview hidden' id='${reccoId[i]}'>
+                ${reccoSumm[i]}
+                <section class='spacer'></section>
+                </div>
+                <a class='button pointer spacer show-over' onClick='showOverview(${reccoId[i]})'>Read Overview</a>
+                </section>`
+            )
+        }
     }
 
     adjustFooter('.recommendations');
